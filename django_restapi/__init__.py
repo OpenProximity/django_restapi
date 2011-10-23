@@ -1,11 +1,13 @@
-from django_restapi.resource import Resource, ResourceBase
-from django_restapi.model_resource import Collection, Entry
-from django_restapi.receiver import *
-from django_restapi.responder import *
-from django_restapi.authentication import *
-from django_restapi.sites import site, RestSite
+try:
+    from django_restapi.resource import Resource, ResourceBase
+    from django_restapi.model_resource import Collection, Entry
+    from django_restapi.receiver import *
+    from django_restapi.responder import *
+    from django_restapi.authentication import *
+    from django_restapi.sites import site, RestSite
+except:
+    pass
 
-from django.utils.importlib import import_module
 
 
 # A flag to tell us if autodiscover is running.  autodiscover will set this to
@@ -18,6 +20,8 @@ def autodiscover():
     not present. This forces an import on them to register any rest bits they
     may want.
     """
+    from django.utils.importlib import import_module
+
     # Bail out if autodiscover didn't finish loading from a previous call so
     # that we avoid running autodiscover again when the URLconf is loaded by
     # the exception handler to resolve the handler500 view.  This prevents an
@@ -60,3 +64,5 @@ def autodiscover():
         import_module("%s.rest" % app)
     # autodiscover was successful, reset loading flag.
     LOADING_REST = False
+
+__version__="0.1.0"
